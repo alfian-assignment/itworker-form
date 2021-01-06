@@ -6,6 +6,7 @@
 package Views;
 
 import Exceptions.Minimun10DigitNoPegawai;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,6 +52,10 @@ public class Form extends javax.swing.JFrame {
         String posisi = this.selectPosisi.getSelectedItem().toString();
         double gaji = this.getGaji(posisi);
         this.setTextFieldGaji(gaji);
+    }
+    
+    public void openPopUp(String message) {
+        this.popup.showMessageDialog(null, message);
     }
 
     /**
@@ -228,6 +233,7 @@ public class Form extends javax.swing.JFrame {
             this.insertData();
         } catch (Exception err) {
             System.out.println(err.getMessage());
+            this.openPopUp(err.getMessage());
         }
     }//GEN-LAST:event_insertButtonMouseClicked
 
@@ -273,7 +279,8 @@ public class Form extends javax.swing.JFrame {
             }
         });
     }
-
+    public JOptionPane popup;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton exitButton;
