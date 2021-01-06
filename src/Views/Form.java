@@ -5,6 +5,8 @@
  */
 package Views;
 
+import Exceptions.Minimun10DigitNoPegawai;
+
 /**
  *
  * @author Alfian Andi Nugraha
@@ -16,6 +18,12 @@ public class Form extends javax.swing.JFrame {
      */
     public Form() {
         initComponents();
+    }
+    
+    public void insertData() throws Minimun10DigitNoPegawai {
+        if(this.inputNoPegawai.getText().length() != 10) {
+            throw new Minimun10DigitNoPegawai();
+        }
     }
 
     /**
@@ -62,6 +70,11 @@ public class Form extends javax.swing.JFrame {
         jLabel5.setText("Gaji (IDR)");
 
         insertButton.setText("Insert");
+        insertButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insertButtonMouseClicked(evt);
+            }
+        });
 
         updateButton.setText("Update");
 
@@ -172,6 +185,14 @@ public class Form extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void insertButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insertButtonMouseClicked
+        try {
+            this.insertData();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+    }//GEN-LAST:event_insertButtonMouseClicked
 
     /**
      * @param args the command line arguments
