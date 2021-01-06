@@ -61,7 +61,7 @@ public class Form extends javax.swing.JFrame {
 
         jLabel3.setText("No. Pegawai");
 
-        selectPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Senior Programmer", "Bussiness Analyst", "Data Center Officer", "Junior Programmer" }));
 
         jLabel4.setText("Posisi");
 
