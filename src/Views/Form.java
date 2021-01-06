@@ -78,6 +78,28 @@ public class Form extends javax.swing.JFrame {
         this.openPopUp("Data berhasil ditambahkan");
     }
     
+    public void deleteData() throws Minimun10DigitNoPegawai, Exception {
+        if(this.selectedIdPegawai < 0) {
+            this.openPopUp("Silahkan pilih id yang ingin dihapus");
+            return;
+        }
+        
+        String query = String.format(
+            "DELETE FROM workers WHERE id = %d", this.selectedIdPegawai
+        );
+        
+        try {
+            Statement statement = Database.getConnection().createStatement();
+            statement.executeUpdate(query);
+        } catch(Exception err) {
+            throw err;
+        }
+        
+        this.refreshData();
+        this.openPopUp("Id : " + this.selectedIdPegawai + " berhasil dihapus");
+        this.resetSelectedIdPegawai();
+    }
+    
     public double getGaji(String posisi) {
         switch(posisi){
             case "Senior Programmer":
@@ -91,6 +113,10 @@ public class Form extends javax.swing.JFrame {
             default:
                 return -1;
         }
+    }
+    
+    public void resetSelectedIdPegawai() {
+        this.selectedIdPegawai = -1;
     }
     
     public void setTextFieldGaji(double gaji) {
@@ -203,6 +229,11 @@ public class Form extends javax.swing.JFrame {
         }
 
         deleteButton.setText("Delete");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -303,6 +334,14 @@ public class Form extends javax.swing.JFrame {
         this.selectedIdPegawai = selectedId;
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        try {
+            this.deleteData();
+        } catch (Exception err) {
+            this.openPopUp(err.getMessage());
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -338,7 +377,7 @@ public class Form extends javax.swing.JFrame {
         });
     }
     public JOptionPane popup;
-    private int selectedIdPegawai;
+    private int selectedIdPegawai = -1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
