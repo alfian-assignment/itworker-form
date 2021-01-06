@@ -76,6 +76,7 @@ public class Form extends javax.swing.JFrame {
         
         this.refreshData();
         this.openPopUp("Data berhasil ditambahkan");
+        this.resetForm();
     }
     
     public void deleteData() throws Minimun10DigitNoPegawai, Exception {
@@ -98,6 +99,7 @@ public class Form extends javax.swing.JFrame {
         this.refreshData();
         this.openPopUp("Id : " + this.selectedIdPegawai + " berhasil dihapus");
         this.resetSelectedIdPegawai();
+        this.resetForm();
     }
     
     public void updateData() throws Minimun10DigitNoPegawai, Exception {
@@ -130,6 +132,7 @@ public class Form extends javax.swing.JFrame {
         this.refreshData();
         this.openPopUp("Data berhasil diperbaharui");
         this.resetSelectedIdPegawai();
+        this.resetForm();
     }
     
     public double getGaji(String posisi) {
@@ -150,6 +153,13 @@ public class Form extends javax.swing.JFrame {
     public void resetSelectedIdPegawai() {
         this.selectedIdPegawai = -1;
         this.toggleUpdateAndDeleteButton();
+    }
+    
+    public void resetForm() {
+        this.inputNama.setText("");
+        this.inputNoPegawai.setText("");
+        this.selectPosisi.setSelectedItem("Senior Programmer");
+        this.handleSelectPosisi();
     }
     
     public void setTextFieldGaji(double gaji) {
