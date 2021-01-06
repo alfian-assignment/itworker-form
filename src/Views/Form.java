@@ -149,6 +149,7 @@ public class Form extends javax.swing.JFrame {
     
     public void resetSelectedIdPegawai() {
         this.selectedIdPegawai = -1;
+        this.toggleUpdateAndDeleteButton();
     }
     
     public void setTextFieldGaji(double gaji) {
@@ -164,6 +165,11 @@ public class Form extends javax.swing.JFrame {
     
     public void openPopUp(String message) {
         this.popup.showMessageDialog(null, message);
+    }
+    
+    public void toggleUpdateAndDeleteButton() {
+        this.updateButton.setEnabled(!this.updateButton.isEnabled());
+        this.deleteButton.setEnabled(!this.deleteButton.isEnabled());
     }
 
     /**
@@ -222,6 +228,7 @@ public class Form extends javax.swing.JFrame {
         });
 
         updateButton.setText("Update");
+        updateButton.setEnabled(false);
         updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updateButtonMouseClicked(evt);
@@ -266,6 +273,7 @@ public class Form extends javax.swing.JFrame {
         }
 
         deleteButton.setText("Delete");
+        deleteButton.setEnabled(false);
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteButtonMouseClicked(evt);
@@ -374,9 +382,12 @@ public class Form extends javax.swing.JFrame {
         this.inputNama.setText(this.jTable1.getValueAt(selectedRow, 2).toString());
         this.selectPosisi.setSelectedItem(this.jTable1.getValueAt(selectedRow, 3).toString());
         this.handleSelectPosisi();
+        this.updateButton.setEnabled(true);
+        this.deleteButton.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        if(!this.deleteButton.isEnabled()) return;
         try {
             this.deleteData();
         } catch (Exception err) {
@@ -385,6 +396,7 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+        if(!this.updateButton.isEnabled()) return;
         try {
             this.updateData();
         } catch (Exception err) {
