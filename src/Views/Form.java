@@ -6,6 +6,9 @@
 package Views;
 
 import Exceptions.Minimun10DigitNoPegawai;
+import Utils.Database;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +23,18 @@ public class Form extends javax.swing.JFrame {
     public Form() {
         initComponents();
         this.handleSelectPosisi();
+        
+        try {
+            String query = "SELECT * FROM workers";
+            Statement statement = Database.getConnection().createStatement();
+            ResultSet result = statement.executeQuery(query);
+            
+            while(result.next()) {
+                System.out.println(result.getString("nama"));
+            }
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
     }
     
     public void insertData() throws Minimun10DigitNoPegawai {
