@@ -48,7 +48,7 @@ public class Form extends javax.swing.JFrame {
                 tableModel.addRow(resultRow);
             }
         } catch (Exception err) {
-            System.out.println(err.getMessage());
+            this.openPopUp("Tidak dapat memuat data silahkan cek database\nError : " + err.getMessage());
         }
     }
     
