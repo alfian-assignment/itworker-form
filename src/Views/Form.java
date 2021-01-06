@@ -100,6 +100,38 @@ public class Form extends javax.swing.JFrame {
         this.resetSelectedIdPegawai();
     }
     
+    public void updateData() throws Minimun10DigitNoPegawai, Exception {
+        if(this.inputNoPegawai.getText().length() != 10) {
+            throw new Minimun10DigitNoPegawai();
+        }
+        
+        if(this.selectedIdPegawai < 0) {
+            this.openPopUp("Silahkan pilih id yang ingin diperbaharui");
+            return;
+        }
+        
+        String nama = this.inputNama.getText();
+        String no_pegawai = this.inputNoPegawai.getText();
+        String posisi = this.selectPosisi.getSelectedItem().toString();
+        double gaji = this.getGaji(posisi);
+        
+        String query = String.format(
+            "UPDATE workers SET nama = '%s', no_pegawai = '%s', posisi = '%s', gaji = %f WHERE id = %d", 
+            nama, no_pegawai, posisi, gaji, this.selectedIdPegawai
+        );
+        
+        try {
+            Statement statement = Database.getConnection().createStatement();
+            statement.executeUpdate(query);
+        } catch(Exception err) {
+            throw err;
+        }
+        
+        this.refreshData();
+        this.openPopUp("Data berhasil diperbaharui");
+        this.resetSelectedIdPegawai();
+    }
+    
     public double getGaji(String posisi) {
         switch(posisi){
             case "Senior Programmer":
@@ -190,6 +222,11 @@ public class Form extends javax.swing.JFrame {
         });
 
         updateButton.setText("Update");
+        updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateButtonMouseClicked(evt);
+            }
+        });
 
         exitButton.setText("Exit");
         exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -346,6 +383,14 @@ public class Form extends javax.swing.JFrame {
             this.openPopUp(err.getMessage());
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+        try {
+            this.updateData();
+        } catch (Exception err) {
+            this.openPopUp(err.getMessage());
+        }
+    }//GEN-LAST:event_updateButtonMouseClicked
 
     /**
      * @param args the command line arguments
