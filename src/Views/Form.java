@@ -111,6 +111,11 @@ public class Form extends javax.swing.JFrame {
         updateButton.setText("Update");
 
         exitButton.setText("Exit");
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButtonMouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,6 +234,10 @@ public class Form extends javax.swing.JFrame {
     private void selectPosisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPosisiActionPerformed
         this.handleSelectPosisi();
     }//GEN-LAST:event_selectPosisiActionPerformed
+
+    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonMouseClicked
 
     /**
      * @param args the command line arguments
