@@ -332,6 +332,11 @@ public class Form extends javax.swing.JFrame {
         int selectedRow = this.jTable1.getSelectedRow();
         int selectedId = Integer.parseInt(this.jTable1.getValueAt(selectedRow, 0).toString());
         this.selectedIdPegawai = selectedId;
+        
+        this.inputNoPegawai.setText(this.jTable1.getValueAt(selectedRow, 1).toString());
+        this.inputNama.setText(this.jTable1.getValueAt(selectedRow, 2).toString());
+        this.selectPosisi.setSelectedItem(this.jTable1.getValueAt(selectedRow, 3).toString());
+        this.handleSelectPosisi();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
