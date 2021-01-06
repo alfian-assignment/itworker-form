@@ -18,12 +18,39 @@ public class Form extends javax.swing.JFrame {
      */
     public Form() {
         initComponents();
+        this.handleSelectPosisi();
     }
     
     public void insertData() throws Minimun10DigitNoPegawai {
         if(this.inputNoPegawai.getText().length() != 10) {
             throw new Minimun10DigitNoPegawai();
         }
+    }
+    
+    public double getGaji(String posisi) {
+        switch(posisi){
+            case "Senior Programmer":
+                return 15000000;
+            case "Bussiness Analyst":
+                return 21000000;
+            case "Data Center Officer":
+                return 18000000;
+            case "Junior Programmer":
+                return 8000000;
+            default:
+                return -1;
+        }
+    }
+    
+    public void setTextFieldGaji(double gaji) {
+        String nominal = String.format("%.0f", gaji);
+        this.fieldGaji.setText(String.valueOf(nominal));
+    }
+    
+    public void handleSelectPosisi() {
+        String posisi = this.selectPosisi.getSelectedItem().toString();
+        double gaji = this.getGaji(posisi);
+        this.setTextFieldGaji(gaji);
     }
 
     /**
@@ -62,6 +89,11 @@ public class Form extends javax.swing.JFrame {
         jLabel3.setText("No. Pegawai");
 
         selectPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Senior Programmer", "Bussiness Analyst", "Data Center Officer", "Junior Programmer" }));
+        selectPosisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectPosisiActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Posisi");
 
@@ -193,6 +225,10 @@ public class Form extends javax.swing.JFrame {
             System.out.println(err.getMessage());
         }
     }//GEN-LAST:event_insertButtonMouseClicked
+
+    private void selectPosisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPosisiActionPerformed
+        this.handleSelectPosisi();
+    }//GEN-LAST:event_selectPosisiActionPerformed
 
     /**
      * @param args the command line arguments
