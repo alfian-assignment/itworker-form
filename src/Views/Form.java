@@ -29,6 +29,7 @@ public class Form extends javax.swing.JFrame {
     }
     
     public void refreshData() {
+        ((DefaultTableModel)this.jTable1.getModel()).setRowCount(0);
         DefaultTableModel tableModel = (DefaultTableModel)this.jTable1.getModel();
         
         try {
@@ -51,10 +52,30 @@ public class Form extends javax.swing.JFrame {
         }
     }
     
-    public void insertData() throws Minimun10DigitNoPegawai {
+    public void insertData() throws Minimun10DigitNoPegawai, Exception {
         if(this.inputNoPegawai.getText().length() != 10) {
             throw new Minimun10DigitNoPegawai();
         }
+        
+        String nama = this.inputNama.getText();
+        String no_pegawai = this.inputNoPegawai.getText();
+        String posisi = this.selectPosisi.getSelectedItem().toString();
+        double gaji = this.getGaji(posisi);
+        
+        String query = String.format(
+            "INSERT INTO workers(nama, no_pegawai, posisi, gaji) VALUES ('%s', '%s', '%s', %f)", 
+            nama, no_pegawai, posisi, gaji
+        );
+        
+        try {
+            Statement statement = Database.getConnection().createStatement();
+            statement.executeUpdate(query);
+        } catch(Exception err) {
+            throw err;
+        }
+        
+        this.refreshData();
+        this.openPopUp("Data berhasil ditambahkan");
     }
     
     public double getGaji(String posisi) {
