@@ -10,6 +10,8 @@ import Utils.Database;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -23,6 +25,11 @@ public class Form extends javax.swing.JFrame {
     public Form() {
         initComponents();
         this.handleSelectPosisi();
+        this.refreshData();
+    }
+    
+    public void refreshData() {
+        DefaultTableModel tableModel = (DefaultTableModel)this.jTable1.getModel();
         
         try {
             String query = "SELECT * FROM workers";
@@ -30,7 +37,14 @@ public class Form extends javax.swing.JFrame {
             ResultSet result = statement.executeQuery(query);
             
             while(result.next()) {
-                System.out.println(result.getString("nama"));
+                Object[] resultRow = {
+                    result.getInt("id"),
+                    result.getString("no_pegawai"),
+                    result.getString("nama"),
+                    result.getString("posisi"),
+                    String.format("%.0f", result.getDouble("gaji")),
+                };
+                tableModel.addRow(resultRow);
             }
         } catch (Exception err) {
             System.out.println(err.getMessage());
@@ -139,10 +153,7 @@ public class Form extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "No. Pegawai", "Nama", "Posisi", "Gaji"
